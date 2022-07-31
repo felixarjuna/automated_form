@@ -11,7 +11,7 @@ from apiclient import discovery
 from httplib2 import Http
 from oauth2client import client, file, tools
 
-from datetime import date as dt
+from datetime import date as dt, timedelta
 import json
 
 # If modifying these scopes, delete the file token.json.
@@ -24,13 +24,27 @@ def main():
     date = today.strftime("%d %B %Y")
     week = today.strftime("%U")
 
+    # Duplicate Form
     result = duplicate_form(week=week)
     print(json.dumps(result, indent=2))
-    res = update_form(date=date, result=result)
+
+    # Update Form
+    satur_date = get_next_saturday(today, 5)
+    str_date = satur_date.strftime("%d %B %Y")
+    res = update_form(date=str_date, result=result)
     print(json.dumps(res, indent=2))
     res_uri = res["responderUri"]
     print(res_uri)
+
+    # Send Message to Line
     send_message_to_line(res_uri)
+
+
+def get_next_saturday(start_date, weekday):
+    time = timedelta((7 + weekday - start_date.weekday()) % 7)
+    saturdate = start_date + time
+
+    return saturdate
 
 
 def duplicate_form(week):

@@ -11,33 +11,11 @@ from apiclient import discovery
 from httplib2 import Http
 from oauth2client import client, file, tools
 
-from datetime import date as dt, timedelta
-import json
+from datetime import timedelta
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/drive']
 DISCOVERY_DOC = "https://forms.googleapis.com/$discovery/rest?version=v1"
-
-
-def main():
-    today = dt.today()
-    date = today.strftime("%d %B %Y")
-    week = today.strftime("%U")
-
-    # Duplicate Form
-    result = duplicate_form(week=week)
-    print(json.dumps(result, indent=2))
-
-    # Update Form
-    satur_date = get_next_saturday(today, 5)
-    str_date = satur_date.strftime("%d %B %Y")
-    res = update_form(date=str_date, result=result)
-    print(json.dumps(res, indent=2))
-    res_uri = res["responderUri"]
-    print(res_uri)
-
-    # Send Message to Line
-    send_message_to_line(res_uri)
 
 
 def get_next_saturday(start_date, weekday):
@@ -121,6 +99,3 @@ def send_message_to_line(uri):
               f'google form di bawah ini. Selamat beraktivitas, Tuhan Yesus memberkati! ❤️\n\n{uri}',
               notification=True)
 
-
-if __name__ == '__main__':
-    main()

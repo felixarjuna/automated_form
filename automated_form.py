@@ -91,6 +91,7 @@ def send_message_to_line(uri):
     from py_topping.general_use import lazy_LINE
 
     # Create Class
+    # token = 'obhJ7x4aa7tsDJ8awbUckLGNLRaLwi8TF5F3BznFZfU'
     token = '6iveKXRAOsMumXqa2U1kfDKBmcqlTHDKLOYJfG8e12L'
     line = lazy_LINE(token=token)
 

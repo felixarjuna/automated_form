@@ -3,7 +3,7 @@ import json
 from automated_form import duplicate_form, get_next_saturday, update_form, send_message_to_line
 
 
-def lambda_handler(event, context):
+def lambda_handler():
     today = dt.today()
     week = today.strftime("%U")
 
@@ -21,3 +21,6 @@ def lambda_handler(event, context):
 
     # Send Message to Line
     send_message_to_line(res_uri)
+
+
+lambda_handler()
